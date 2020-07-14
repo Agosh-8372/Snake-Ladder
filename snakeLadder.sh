@@ -40,7 +40,7 @@ reqValue=$((FINAL_POSITION-playerPosCount))
 	if [ $reqValue -gt $DICE_VALUE_LIMIT ]
 	then
 		playerPosCount=$((playerPosCount+diceValue))
-	elif [[ $reqValue -gt $START_POSITION ]] && [[ $reqValue -le $DICE_VALUE_LIMIT ]] && [[ $diceValue -eq $reqValue ]]
+	elif [[ $reqValue -gt $START_POSITION ]] && [[ $reqValue -le $DICE_VALUE_LIMIT ]] && [[ $diceValue -le $reqValue ]]
 	then
 		playerPosCount=$((playerPosCount+diceValue))
 	else
