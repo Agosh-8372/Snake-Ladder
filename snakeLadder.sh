@@ -30,7 +30,7 @@ fi
 }
 
 function noPlay(){
-	echo "$player position=$playerPosCount"
+	echo -e "position=$playerPosCount\n"
 	chance
 }
 
@@ -47,7 +47,7 @@ reqValue=$((FINAL_POSITION-playerPosCount))
 		playerPosCount=$playerPosCount
 	fi
 update
-echo "$player position =$playerPosCount"
+echo -e "position =$playerPosCount\n"
 	if [[ $playerPosCount -lt $FINAL_POSITION ]]
 	then
 		playCondition
@@ -65,7 +65,7 @@ playerPosCount=$((playerPosCount-diceValue))
 		playerSecondPos=$START_POSITION
 		playerPosCount=$START_POSITION
 	fi
-echo "$player position =$playerPosCount"
+echo -e "position =$playerPosCount\n"
 update
 chance
 }
@@ -101,16 +101,15 @@ function playCondition()
 random=$((RANDOM%3))
 	case $random in
 		0)
-			echo "NO PLAY"
+			echo "$player Got NO PLAY"
 			noPlay
 			;;
 		1)
-			echo "Got  Ladder"
+			echo "$player Got  Ladder"
 			ladder
-			#playCondition
 			;;
 		2)
-			echo "Got a Snake: "
+			echo "$player Got a Snake: "
 			snake
 			;;
 	esac
