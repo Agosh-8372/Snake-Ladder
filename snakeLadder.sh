@@ -28,7 +28,7 @@ function checkWin(){
 		echo "player 2 Wins  and total times die rolled=$diceCount"
 	else
 		echo "error"
-fi
+	fi
 }
 
 function noPlay(){
