@@ -9,7 +9,9 @@ diceCount=0;
 player1="true"
 player2="false"
 player="Player1"
-
+noPlayVal=0;
+ladderVal=1;
+snakeVal=2;
 function rollDie(){
 	((++diceCount))
 	diceValue=$(((RANDOM%6)+1))
@@ -100,18 +102,18 @@ function playCondition()
 {
 random=$((RANDOM%3))
 	case $random in
-		0)
-			echo "$player Got NO PLAY"
-			noPlay
-			;;
-		1)
-			echo "$player Got  Ladder"
-			ladder
-			;;
-		2)
-			echo "$player Got a Snake: "
-			snake
-			;;
+		$noPlayVal)
+				echo "$player Got NO PLAY"
+				noPlay
+				;;
+		$ladderVal)
+				echo "$player Got  Ladder"
+				ladder
+				;;
+		$sankeVal)
+				echo "$player Got a Snake: "
+				snake
+				;;
 	esac
 }
 while (( $playerPosCount < $FINAL_POSITION ))
