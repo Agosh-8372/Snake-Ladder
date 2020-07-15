@@ -13,108 +13,104 @@ noPlayVal=0;
 ladderVal=1;
 snakeVal=2;
 function rollDie(){
-	((++diceCount))
-	diceValue=$(((RANDOM%6)+1))
-	echo "dice value="$diceValue
-	return;
+((++diceCount))
+diceValue=$(((RANDOM%6)+1))
+echo "dice value="$diceValue
+return;
 }
 
 function checkWin(){
-	if [[ $playerFirstPos -eq $FINAL_POSITION ]]
-	then
-		echo "Player 1 Wins and total times die rolled=$diceCount"
-	elif [[ $playerSecondPos -eq $FINAL_POSITION ]]
-	then
-		echo "player 2 Wins  and total times die rolled=$diceCount"
-	else
-		echo "error"
-	fi
+if [[ $playerFirstPos -eq $FINAL_POSITION ]]
+then
+	echo "Player 1 Wins and total times die rolled=$diceCount"
+elif [[ $playerSecondPos -eq $FINAL_POSITION ]]
+then
+	echo "player 2 Wins  and total times die rolled=$diceCount"
+else
+	echo "error"
+fi
 }
 
 function noPlay(){
-	echo -e "position=$playerPosCount\n"
-	chance
+echo -e "position=$playerPosCount\n"
+chance
 }
 
 function ladder(){
 rollDie
 reqValue=$((FINAL_POSITION-playerPosCount))
-	if [ $reqValue -gt $DICE_VALUE_LIMIT ]
-	then
-		playerPosCount=$((playerPosCount+diceValue))
-	elif [[ $reqValue -gt $START_POSITION ]] && [[ $reqValue -le $DICE_VALUE_LIMIT ]] && [[ $diceValue -le $reqValue ]]
-	then
-		playerPosCount=$((playerPosCount+diceValue))
-	else
-		playerPosCount=$playerPosCount
-	fi
+if [ $reqValue -gt $DICE_VALUE_LIMIT ]
+then
+	playerPosCount=$((playerPosCount+diceValue))
+elif [[ $reqValue -gt $START_POSITION ]] && [[ $reqValue -le $DICE_VALUE_LIMIT ]] && [[ $diceValue -le $reqValue ]]
+then
+	playerPosCount=$((playerPosCount+diceValue))
+else
+	playerPosCount=$playerPosCount
+fi
 update
 echo -e "position =$playerPosCount\n"
-	if [[ $playerPosCount -lt $FINAL_POSITION ]]
-	then
-		playCondition
-	else
-		checkWin
-	fi
+if [[ $playerPosCount -lt $FINAL_POSITION ]]
+then
+	playCondition
+else
+	checkWin
+fi
 }
 
-function snake()
-{
+function snake(){
 rollDie
 playerPosCount=$((playerPosCount-diceValue))
-	if [ $playerPosCount -lt $START_POSITION ]
-	then
-		playerSecondPos=$START_POSITION
-		playerPosCount=$START_POSITION
-	fi
+if [ $playerPosCount -lt $START_POSITION ]
+then
+	playerSecondPos=$START_POSITION
+	playerPosCount=$START_POSITION
+fi
 echo -e "position =$playerPosCount\n"
 update
 chance
 }
 
-function chance()
-{
-	if [[ $player1 == true ]]
-	then
-		player1="false"
-		player2="true"
-		player="Player2"
-		playerPosCount=$playerSecondPos
-	else
-		player1="true"
-		player2="false"
-		player="Player1"
-		playerPosCount=$playerFirstPos
-	fi
+function chance(){
+if [[ $player1 == true ]]
+then
+	player1="false"
+	player2="true"
+	player="Player2"
+	playerPosCount=$playerSecondPos
+else
+	player1="true"
+	player2="false"
+	player="Player1"
+	playerPosCount=$playerFirstPos
+fi
 }
 
-function update()
-{
-	if [[ $player1 == true ]]
-	then
-		playerFirstPos=$playerPosCount
-	else
-		playerSecondPos=$playerPosCount
-	fi
+function update(){
+if [[ $player1 == true ]]
+then
+	playerFirstPos=$playerPosCount
+else
+	playerSecondPos=$playerPosCount
+fi
 }
 
-function playCondition()
-{
+function playCondition(){
 random=$((RANDOM%3))
-	case $random in
-		$noPlayVal)
-				echo "$player Got NO PLAY"
-				noPlay
-				;;
-		$ladderVal)
-				echo "$player Got  Ladder"
-				ladder
-				;;
-		$sankeVal)
-				echo "$player Got a Snake: "
-				snake
-				;;
-	esac
+case $random in
+	$noPlayVal)
+			echo "$player Got NO PLAY"
+			noPlay
+			;;
+	$ladderVal)
+			echo "$player Got  Ladder"
+			ladder
+			;;
+	$sankeVal)
+			echo "$player Got a Snake: "
+			snake
+			;;
+esac
 }
 while (( $playerPosCount < $FINAL_POSITION ))
 do
